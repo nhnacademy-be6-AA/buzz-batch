@@ -1,9 +1,8 @@
 package store.buzzbook.batch.job;
 
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
+import static store.buzzbook.batch.common.utils.ZonedDateTimeUtils.*;
+
 import java.util.Collections;
-import java.util.List;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -26,7 +25,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import lombok.RequiredArgsConstructor;
-import store.buzzbook.batch.common.utils.ZonedDateTimeUtils;
 import store.buzzbook.batch.entity.CouponLog;
 import store.buzzbook.batch.entity.constant.CouponStatus;
 import store.buzzbook.batch.repository.CouponLogRepository;
@@ -68,7 +66,7 @@ public class ExpireCouponJobConfig {
 			.repository(couponLogRepository)
 			.methodName("findByExpireDateIsAfter")
 			.pageSize(500)
-			.arguments(Collections.singletonList(ZonedDateTimeUtils.getMidnight()))
+			.arguments(Collections.singletonList(getMidnight()))
 			.sorts(Collections.singletonMap("id", Sort.Direction.ASC))
 			.build();
 	}
