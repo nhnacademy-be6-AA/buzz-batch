@@ -10,5 +10,5 @@ import store.buzzbook.batch.entity.CouponLog;
 
 public interface CouponLogRepository extends JpaRepository<CouponLog, Long> {
 
-	Page<CouponLog> findByExpireDateIsAfter(ZonedDateTime dateTime, Pageable pageable);
+	Page<CouponLog> findByExpireDateIsBefore(ZonedDateTime dateTime, Pageable pageable);
 }
