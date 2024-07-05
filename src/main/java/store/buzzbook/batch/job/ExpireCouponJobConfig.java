@@ -1,7 +1,6 @@
 package store.buzzbook.batch.job;
 
-import static store.buzzbook.batch.common.utils.ZonedDateTimeUtils.*;
-
+import java.time.LocalDate;
 import java.util.Collections;
 
 import org.springframework.batch.core.Job;
@@ -25,17 +24,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import lombok.RequiredArgsConstructor;
-import store.buzzbook.batch.entity.CouponLog;
+import lombok.extern.slf4j.Slf4j;
+import store.buzzbook.batch.entity.Coupon;
 import store.buzzbook.batch.entity.constant.CouponStatus;
-import store.buzzbook.batch.repository.CouponLogRepository;
+import store.buzzbook.batch.repository.CouponRepository;
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class ExpireCouponJobConfig {
 
 	private final JobRepository jobRepository;
 	private final PlatformTransactionManager transactionManager;
-	private final CouponLogRepository couponLogRepository;
+	private final CouponRepository couponRepository;
 
 	@Bean("expireCouponJob")
 	public Job expireCouponJob(Step expireCouponStep) {
@@ -47,11 +48,11 @@ public class ExpireCouponJobConfig {
 
 	@JobScope
 	@Bean("expireCouponStep")
-	public Step expireCouponStep(ItemReader<CouponLog> expireCouponReader,
-		ItemProcessor<CouponLog, CouponLog> expireCouponProcessor,
-		ItemWriter<CouponLog> expireCouponWriter) {
+	public Step expireCouponStep(ItemReader<Coupon> expireCouponReader,
+		ItemProcessor<Coupon, Coupon> expireCouponProcessor,
+		ItemWriter<Coupon> expireCouponWriter) {
 		return new StepBuilder("expireCouponStep", jobRepository)
-			.<CouponLog, CouponLog>chunk(500, transactionManager)
+			.<Coupon, Coupon>chunk(500, transactionManager)
 			.reader(expireCouponReader)
 			.processor(expireCouponProcessor)
 			.writer(expireCouponWriter)
@@ -60,30 +61,31 @@ public class ExpireCouponJobConfig {
 
 	@StepScope
 	@Bean
-	public RepositoryItemReader<CouponLog> expireCouponReader() {
-		return new RepositoryItemReaderBuilder<CouponLog>()
+	public RepositoryItemReader<Coupon> expireCouponReader() {
+		log.info("Expire coupon reader started");
+		return new RepositoryItemReaderBuilder<Coupon>()
 			.name("expireCouponReader")
-			.repository(couponLogRepository)
+			.repository(couponRepository)
 			.methodName("findByExpireDateIsBefore")
 			.pageSize(500)
-			.arguments(Collections.singletonList(getMidnight()))
+			.arguments(Collections.singletonList(LocalDate.now()))
 			.sorts(Collections.singletonMap("id", Sort.Direction.ASC))
 			.build();
 	}
 
 	@StepScope
 	@Bean
-	public ItemProcessor<CouponLog, CouponLog> expireCouponProcessor() {
-		return item -> {item.setStatus(CouponStatus.EXPIRED);
+	public ItemProcessor<Coupon, Coupon> expireCouponProcessor() {
+		return item -> {item.changeStatus(CouponStatus.EXPIRED);
 			return item;
 		};
 	}
 
 	@StepScope
 	@Bean
-	public RepositoryItemWriter<CouponLog> expireCouponWriter() {
-		return new RepositoryItemWriterBuilder<CouponLog>()
-			.repository(couponLogRepository)
+	public RepositoryItemWriter<Coupon> expireCouponWriter() {
+		return new RepositoryItemWriterBuilder<Coupon>()
+			.repository(couponRepository)
 			.methodName("save")
 			.build();
 	}

@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import store.buzzbook.batch.entity.constant.CouponRange;
+import store.buzzbook.batch.entity.constant.CouponScope;
 
 @Getter
 @AllArgsConstructor
@@ -29,5 +29,5 @@ public class CouponType {
 	@NotNull
 	@Column(nullable = false, length = 10)
 	@Enumerated(value = EnumType.STRING)
-	private CouponRange name;
+	private CouponScope name;
 }
