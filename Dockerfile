@@ -2,6 +2,6 @@ FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-COPY /target/core-0.0.1-SNAPSHOT.jar /app/core.jar
+COPY /target/batch-0.0.1-SNAPSHOT.jar /app/batch.jar
 
-ENTRYPOINT ["java", "-jar", "/app/core.jar", "--spring.profiles.active=prod"]
+ENTRYPOINT ["java", "-jar", "/app/batch.jar", "--spring.profiles.active=prod"]
