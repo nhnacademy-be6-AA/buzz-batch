@@ -34,10 +34,8 @@ management:
     env:
       enabled: true
 
-schedule:
-  expire:
-    coupon:
-      cron: 0/10 * * * * ?
+server:
+  port: 9090
 ---
 spring:
   config:
@@ -86,6 +84,14 @@ eureka:
     service-url:
       defaultZone: http://admin:1234@localhost:8761/eureka
 
+schedule:
+  expire:
+    coupon:
+      cron: 0/10 * * * * ?
+  birthday:
+    coupon:
+      cron: 0/15 * * * * ?
+
 ---
 spring:
   config:
@@ -133,3 +139,11 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://admin:1234@eureka-server:8761/eureka
+
+schedule:
+  expire:
+    coupon:
+      cron: * 0/5 * * * ?
+  birthday:
+    coupon:
+      cron: * 0/5 * * * ?

@@ -18,6 +18,7 @@ public class SchedulerConfig {
 
 	private final JobLauncher jobLauncher;
 	private final Job expireCouponJob;
+	private final Job birthdayCouponJob;
 
 	@Scheduled(cron = "${schedule.expire.coupon.cron}")
 	public void expireCouponJob() throws JobExecutionException {
@@ -26,5 +27,14 @@ public class SchedulerConfig {
 			.toJobParameters();
 
 		jobLauncher.run(expireCouponJob, jobParameters);
+	}
+
+	@Scheduled(cron = "${schedule.birthday.coupon.cron}")
+	public void birthdayCouponJob() throws JobExecutionException {
+		JobParameters jobParameters = new JobParametersBuilder()
+			.addLong("birthday-coupon-job-execution-time", System.currentTimeMillis())
+			.toJobParameters();
+
+		jobLauncher.run(birthdayCouponJob, jobParameters);
 	}
 }
