@@ -143,7 +143,7 @@ eureka:
 schedule:
   expire:
     coupon:
-      cron: * 0/5 * * * ?
+      cron: 0 0/5 * * * ?
   birthday:
     coupon:
-      cron: * 0/5 * * * ?
+      cron: 0 0/5 * * * ?
