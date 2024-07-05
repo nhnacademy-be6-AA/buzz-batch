@@ -28,12 +28,12 @@ jobs:
       - name: login
         uses: docker/login-action@v2
         with:
-          username: heldenar
-          password: u%VsD$M$i2yY9Jm
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push Docker image
         env:
-          IMAGE_NAME: heldenar/book-batch-api
+          IMAGE_NAME: heldenar/batch-api
           TAG: latest
         run: |
           docker build -t $IMAGE_NAME:$TAG .
@@ -51,7 +51,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            docker pull heldenar/book-batch-api:latest
+            docker pull heldenar/batch-api:latest
             docker stop batch_api || true
             docker rm batch_api || true
-            docker run -d --name batch_api --network api_network  -p 9090:9090 heldenar/book-batch-api:latest
+            docker run -d --name batch_api --network api_network  -p 9090:9090 heldenar/batch-api:latest
