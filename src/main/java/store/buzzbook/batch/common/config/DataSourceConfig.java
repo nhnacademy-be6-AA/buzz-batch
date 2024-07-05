@@ -1,4 +1,4 @@
-package store.buzzbook.batch.config;
+package store.buzzbook.batch.common.config;
 
 import javax.sql.DataSource;
 
