@@ -78,7 +78,7 @@ public class BirthdayCouponJobConfig {
 		log.info("birthday coupon reader started");
 
 		return new ItemReader<UserInfo>() {
-			private List<UserInfo> users = userAdapter.getUsersByBirthday();
+			private final List<UserInfo> users = userAdapter.getUsersByBirthday();
 			private int nextUserIndex = 0;
 
 			@Override
