@@ -115,7 +115,7 @@ public class BirthdayCouponJobConfig {
 				.status(CouponStatus.AVAILABLE)
 				.build();
 
-			userAdapter.createUserCoupon(CreateUserCouponRequest.builder()
+			userAdapter.createUserCouponByBatch(CreateUserCouponRequest.builder()
 				.couponPolicyId(couponPolicy.getId())
 				.couponCode(couponCode)
 				.userId(user.id())

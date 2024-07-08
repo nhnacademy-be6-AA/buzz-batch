@@ -13,8 +13,8 @@ import store.buzzbook.batch.dto.UserInfo;
 @FeignClient(name = "userAdapter", url = "http://${api.gateway.host}:" + "${api.gateway.port}/api/account/coupons")
 public interface UserAdapter {
 
-	@PostMapping
-	void createUserCoupon(@RequestBody CreateUserCouponRequest request);
+	@PostMapping("/batch")
+	void createUserCouponByBatch(@RequestBody CreateUserCouponRequest request);
 
 	@GetMapping("/birthday")
 	List<UserInfo> getUsersByBirthday();
