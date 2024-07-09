@@ -44,9 +44,6 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://133.186.241.167:3306/be6_aa_coupon_dev?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-    username: be6_aa
-    password: 6@H(77fpCZDiC6!!
     type: org.apache.commons.dbcp2.BasicDataSource
     initial-size: 3
     max-total: 5
@@ -92,6 +89,14 @@ schedule:
     coupon:
       cron: 0/15 * * * * ?
 
+nhncloud:
+  keymanager:
+    appkey: 2SxwmBzUfnqJaA2A
+    mysql:
+      url: cacea6422cee4017b8af5edd24834165
+      username: 6764281f095b4154ab34a04b4fea6b8d
+      password: 3a23273e707b438e94f104f47ce7a7ba
+
 ---
 spring:
   config:
@@ -100,9 +105,6 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://133.186.241.167:3306/be6_aa_coupon_prod?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-    username: be6_aa
-    password: 6@H(77fpCZDiC6!!
     type: org.apache.commons.dbcp2.BasicDataSource
     initial-size: 3
     max-total: 5
@@ -147,3 +149,11 @@ schedule:
   birthday:
     coupon:
       cron: 0 0/5 * * * ?
+
+nhncloud:
+  keymanager:
+    appkey: 2SxwmBzUfnqJaA2A
+    mysql:
+      url: c7d282283c5c4ddcae6072324adfe3c3
+      username: 0f85ac52219545d382eab76db989e848
+      password: 54e01f8caa504a6ca5e69d30e66bf348
